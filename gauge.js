@@ -26,7 +26,7 @@ function MyViz(id, data, options) {
     		value_theta: 140,
     		cutout: .25,
     		size: 300,
-    		value: 25,
+    		value: 50,
     		range: [0, 100],
     		color: '#DB4437'
 		};
