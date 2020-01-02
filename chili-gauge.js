@@ -52,8 +52,10 @@ function MyViz(id, element, data, options) {
   
 	var svg = d3.select(id).append("svg")
 		.attr("class", "viz_svg")
-  	.attr("preserveAspectRatio", "xMidYMid meet")
-  	.attr("viewBox", `0 0 ${element.clientWidth} ${element.clientHeight}`);
+  	.attr("width", element.clientWidth)
+  	.attr("height", element.clientHeight);
+  	//.attr("preserveAspectRatio", "xMidYMid meet")
+  	//.attr("viewBox", `0 0 ${element.clientWidth} ${element.clientHeight}`);
   
 	var g = svg.append("g");
   
@@ -78,7 +80,7 @@ function MyViz(id, element, data, options) {
   
   console.log(chili.node().getBBox());
   var yadj = (((element.clientHeight - chili.node().getBBox().height) / 2) - chili.node().getBBox().y)
-  chili.attr("transform", `scale(3),translate(0 ${yadj})`);
+  chili.attr("transform", `scale(1),translate(0 0)`);
   
   
    var filter = g.append('defs').append('filter').attr('id','glow'),
