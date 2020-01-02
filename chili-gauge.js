@@ -83,6 +83,16 @@ function MyViz(id, element, data, options) {
   var scale = 3;
   chili.attr("transform", `scale(${scale}),translate(${-93} ${-10})`);
   
+  g.append("line")
+  	.attr("x1", 85)
+  	.attr("y1", 170)
+  	.attr("x2", 155)
+  	.attr("y2", 175)
+  	.attr("stroke", "#ff073a")
+  	.attr("stroke-width", "8px")
+  	.attr("fill", "none")
+  	.style("filter", "url(#glow)");
+  
   
    var filter = g.append('defs').append('filter').attr('id','glow'),
 		feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation', '5').attr('result','coloredBlur'),
