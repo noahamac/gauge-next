@@ -80,7 +80,7 @@ function MyViz(id, element, data, options) {
   
   console.log(chili.node().getBBox());
   var yadj = (((element.clientHeight - chili.node().getBBox().height) / 2) - chili.node().getBBox().y)
-  chili.attr("transform", `scale(1),translate(0 0)`);
+  chili.attr("transform", `scale(2.5),translate(-60 -30)`);
   
   
    var filter = g.append('defs').append('filter').attr('id','glow'),
