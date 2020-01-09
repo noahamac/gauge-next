@@ -18,12 +18,15 @@ function MyViz(id, element, data, options) {
 		gauge_background: '#CECECE',	// Gauge background color
 		spinner_background: '#282828',	// Spinner background color
 		spinner_weight: 6,	// Spinner Weight
-		range: [0,100],
-		value: 50,
+		range: [0,550000],
+		value: 130000,
 		target: 75,
 		target_background: '#282828',
 		target_width: 6
 	};
+  
+  levels = cfg.value / cfg.range[1] * 9;
+  console.log(levels);
 
 	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
 
@@ -84,6 +87,7 @@ function MyViz(id, element, data, options) {
   chili.attr("transform", `scale(${scale}),translate(${-93} ${-10})`);
   
   g.append("line")
+  	.attr("id", "level9")
   	.attr("x1", 75)
   	.attr("y1", 160)
   	.attr("x2", 160)
@@ -93,6 +97,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level8")
   	.attr("x1", 75)
   	.attr("y1", 185)
   	.attr("x2", 165)
@@ -102,6 +107,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level7")
   	.attr("x1", 70)
   	.attr("y1", 210)
   	.attr("x2", 158)
@@ -111,6 +117,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level6")
   	.attr("x1", 75)
   	.attr("y1", 235)
   	.attr("x2", 155)
@@ -120,6 +127,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level5")
   	.attr("x1", 75)
   	.attr("y1", 260)
   	.attr("x2", 165)
@@ -129,6 +137,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level4")
   	.attr("x1", 85)
   	.attr("y1", 285)
   	.attr("x2", 170)
@@ -138,6 +147,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level3")
   	.attr("x1", 110)
   	.attr("y1", 310)
   	.attr("x2", 180)
@@ -147,6 +157,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level2")
   	.attr("x1", 125)
   	.attr("y1", 335)
   	.attr("x2", 180)
@@ -156,6 +167,7 @@ function MyViz(id, element, data, options) {
   	.attr("fill", "none")
   	.style("filter", "url(#glow)");
   g.append("line")
+  	.attr("id", "level1")
   	.attr("x1", 140)
   	.attr("y1", 360)
   	.attr("x2", 180)
