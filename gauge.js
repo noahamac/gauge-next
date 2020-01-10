@@ -46,7 +46,8 @@ const visObject = {
 	  		value: value,
 	  		target: target,
 	  		angle: angle,
-	  		value_label: targetLabel
+	  		value_label: valueLabel,
+	  		target_label: targetLabel
 		};
 
 		var cfg = {
@@ -282,7 +283,6 @@ const visObject = {
 	  			.attr("class", "target-label")
 	  			.text(cfg.target)
 	  			.attr("dy", ".7em")
-	  			.attr("dx", ".35em")
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "20px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')/2+d3.select(".target-label").node().getBBox().width)
@@ -290,7 +290,6 @@ const visObject = {
 	  		g.append("text")
 	  			.attr("class", "target-label-label")
 	  			.text(cfg.target_label)
-	  			.attr("dx", ".35em")
 	  			.attr("dy", "1.9em")
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "12px")
