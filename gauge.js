@@ -31,11 +31,12 @@ const visObject = {
 
 	  	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
 	  	labels = ["minutes", "mins", "orders", "ACV", "units"]
-	  	let color = colorArray[Math.floor(Math.random()*colorArray.length)]
+	  	let color = colorArray[Math.round(Math.random()*colorArray.length)]
 	  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
-		let value = Math.ceil(Math.random()*100)
-		let target = Math.floor(Math.random()*100)
-		let angle = Math.ceil(Math.random()*100+30)
+	  	let targetLabel = labels[Math.round(Math.random()*labels.length)]
+		let value = Math.round(Math.random()*100)
+		let target = Math.round(Math.random()*100)
+		let angle = Math.round(Math.random()*100+30)
 
 		var options = {
 	  		w: width,
@@ -45,7 +46,7 @@ const visObject = {
 	  		value: value,
 	  		target: target,
 	  		angle: angle,
-	  		value_label: valueLabel
+	  		value_label: targetLabel
 		};
 
 		var cfg = {
@@ -69,7 +70,8 @@ const visObject = {
 			labelPadding: 40,
 			targetPadding: 1.1,
 			type: 'vertical',
-			value_label: ''
+			value_label: '',
+			target_label: ''
 		};
 	  
 	  	let radius = 0.4*Math.min(element.clientWidth, element.clientHeight);
@@ -276,6 +278,24 @@ const visObject = {
 	  			.attr("y1", d3.select(".target-fill").attr('y'))
 	  			.attr("x2", 0+d3.select(".vertical-gauge").attr('width')*0.7)
 	  			.attr("y2", d3.select(".target-fill").attr('y'));
+	  		g.append("text")
+	  			.attr("class", "target-label")
+	  			.text(cfg.target)
+	  			.attr("dy", ".7em")
+	  			.attr("dx", ".35em")
+	  			.style("font-family", "Open Sans")
+	  			.style("font-size", "20px")
+	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')/2+d3.select(".target-label").node().getBBox().width)
+	  			.attr("y", d3.select(".vertical-fill").attr('y'));
+	  		g.append("text")
+	  			.attr("class", "target-label-label")
+	  			.text(cfg.target_label)
+	  			.attr("dx", ".35em")
+	  			.attr("dy", "1.9em")
+	  			.style("font-family", "Open Sans")
+	  			.style("font-size", "12px")
+	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')/2+d3.select(".target-label-label").node().getBBox().width)
+	  			.attr("y", d3.select(".vertical-fill").attr('y'));
 	  	} else if (cfg.type == 'horizontal') {
 
 	  	}
