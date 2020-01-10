@@ -1,154 +1,8 @@
 //This template is a good starting point for building a Viz for Looker
-const slices = [
-  { percent: 0.30, color: '#DB4437' }
-];
 
-function getCoordinatesForPercent(percent) {
-  const x = Math.cos(2 * Math.PI * percent);
-  const y = Math.sin(2 * Math.PI * percent);
-  return [x, y];
+function mapBetween(currentNum, minAllowed, maxAllowed, min, max) {
+  	return (maxAllowed - minAllowed) * (currentNum - min) / (max - min) + minAllowed;
 }
-
-function getCoordinatesForPointer(percent) {
-  const x = 1.05*Math.cos(2 * Math.PI * percent);
-  const y = 1.05*Math.sin(2 * Math.PI * percent);
-  return [x, y];
-}
-
-function MyViz(id, data, options) {
-	var cfg = {
-				w: 600,												//Width of the circle
-				h: 600,												//Height of the circle
-				margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
-    		style: "radial",
-    		start_theta: .15,
-    		end_theta: .85,
-    		value_theta: 140,
-    		cutout: .25,
-    		size: 300,
-    		value: 50,
-    		range: [0, 100],
-    		color: '#DB4437'
-		};
-  
-  let cumulativePercent = cfg.end_theta;
-	
-	//Put all of the options into a variable called cfg
-	if('undefined' !== typeof options){
-		for(var i in options){
-			if('undefined' !== typeof options[i]){ cfg[i] = options[i]; }
-	  	}
-	}
-  
-  d3.select(id).select("svg").remove();
-  d3.select(id).style("background-color", "#FFF");
-	//Initiate the radar chart SVG
-	var svg = d3.select(id).append("svg")
-			.attr("width",  cfg.w)
-			.attr("height", cfg.h)
-			.attr("class", id+"too")
-  		.attr("viewBox", "-1 -1 2.5 2")
-  		.style("transform", "rotate(-90deg)");
-
-	//Append a g element	
-	var g = svg.append("g");
-  
-  // GAUGE BACKGROUND
-  g.append("circle")
-  	.attr("class", "gauge-background")
-  	.attr("r", 1)
-    .style("fill", "#CECECE")
-  	.attr("cx", 0)
-  	.attr("cy", 0);
-  
-  // GAUGE REMOVED AREA
-  [startX, startY] = getCoordinatesForPercent(cfg.start_theta);
-  [endX, endY] = getCoordinatesForPercent(cfg.end_theta);
-  largeArcFlag = (cfg.end_theta - cfg.start_theta) > .5 ? 1 : 0;
-  pathData = [
-    `M ${startX} ${startY}`, // Move
-    `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`, // Arc
-    `L 0 0`, // Line
-  ].join(' ');
-  g.append("path")
-		.attr("d", pathData)
-		.attr("fill", "#FFF");
-  
-  // GAUGE FILLED SEGMENT
-  [startX, startY] = getCoordinatesForPercent(cumulativePercent);
-  var fill_pct = Math.abs((cfg.value / (cfg.range[1] - cfg.range[0])) * (1-(cfg.end_theta - cfg.start_theta)));
-  cumulativePercent += fill_pct;
-  [endX, endY] = getCoordinatesForPercent(cumulativePercent);
-  // if the slice is more than 50%, take the large arc (the long way around)
-  largeArcFlag = fill_pct > .5 ? 1 : 0;
-	// create an array and join it just for code readability
-  pathData = [
-    `M ${startX} ${startY}`, // Move
-    `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`, // Arc
-    `L 0 0`, // Line
-  ].join(' ');
-  
-  g.append("path")
-		.attr("d", pathData)
-		.attr("fill", cfg.color);
-  
- 	// GAUGE START ARM
-  [endX, endY] = getCoordinatesForPointer(cfg.start_theta);
-  pathData = [
-    `M ${endX} ${endY}`, // Move
-    `L 0 0`, // Line
-  ].join(' ');
-  g.append("path")
-  	.attr("class", "gauge-start")
-		.attr("d", pathData)
-  	.attr("stroke", "#CECECE")
-  	.attr("stroke-width", ".04px");
-  
-  //GAUGE END ARM
-  [endX, endY] = getCoordinatesForPointer(cfg.end_theta);
-  pathData = [
-    `M ${endX} ${endY}`, // Move
-    `L 0 0`, // Line
-  ].join(' ');
-  g.append("path")
-  	.attr("class", "gauge-end")
-		.attr("d", pathData)
-  	.attr("stroke", "#CECECE")
-  	.attr("stroke-width", ".04px");
-
-  
-  g.append("circle")
-  	.attr("class", "gauge-center")
-  	.attr("r", function() {
-    	return cfg.cutout;
-    })
-    .style("fill", "#FFF")
-  	.style("opacity", 1)
-  	.attr("cx", 0)
-  	.attr("cy", 0);
-  
-  g.append("circle")
-  	.attr("class", "spinner-center")
-  	.attr("r", .05)
-    .style("fill", "#282828")
-  	.attr("cx", 0)
-  	.attr("cy", 0);
-
-  [endX, endY] = getCoordinatesForPointer(cumulativePercent);
-  pathData = [
-    `M ${endX} ${endY}`, // Move
-    `L 0 0`, // Line
-  ].join(' ');
-  g.append("path")
-  	.attr("class", "spinner-pointer")
-		.attr("d", pathData)
-  	.attr("stroke", "#282828")
-  	.attr("stroke-width", ".04px");
-  
-	
-	// Viz code goes here
-
-} //MyViz
 
 const baseOptions = {
 		myOption: {
@@ -161,42 +15,272 @@ const baseOptions = {
 
 const visObject = {
 	create: function(element, config){
-			element.innerHTML = "<div/>";
+			element.innerHTML = "";
 	},
-	updateAsync: function(data, element, config, queryResponse, details, doneRendering){
+	updateAsync: function(data, element, config, queryResponse, details, doneRendering) {
     	// set the dimensions and margins of the graph
-   		marginY = -1*element.clientHeight;
-    	marginX = -1*element.clientWidth;
-
-    	var margin = {top: marginY, right: marginX, bottom: marginY, left: marginX},
+    	var margin = {top: 20, right: 20, bottom: 20, left: 20},
         	width = element.clientWidth,
         	height = element.clientHeight;
 
-	    // append the svg object to the body of the page
-	    // append a 'group' element to 'svg'
-	    // moves the 'group' element to the top left margin
-	    element.innerHTML = ""
-	    var svg = d3.select("#vis").append("svg")
-	        .attr("width", width + margin.left + margin.right)
-	        .attr("height", height + margin.top + margin.bottom)
-	      	.append("g")
-	        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	    var svg = d3.select("#vis").append("svg");
 
 	    // Data processing here to get data in right shape
 
 	  	this.trigger('registerOptions', baseOptions);
 
-			var vizOptions = {
-		  		w: width,
-		  		h: height,
-		  		margin: margin,
-			};
+	 //  	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
+	 //  	labels = ["minutes", "mins", "orders", "ACV", "units"]
+	 //  	let color = colorArray[Math.floor(Math.random()*colorArray.length)]
+	 //  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
+		// let value = Math.ceil(Math.random()*100)
+		// let target = Math.floor(Math.random()*100)
+		// let angle = Math.ceil(Math.random()*100+30)
 
-			//Call function to draw the visualization
-	    svg.append("g").call(MyViz("#vis", data, vizOptions));
+		var options = {
+	  		w: width,
+	  		h: height,
+	  		margin: margin,
+	  		// color: color,
+	  		// value: value,
+	  		// target: target,
+	  		// angle: angle,
+	  		// value_label: valueLabel
+		};
 
-			done()
+		var cfg = {
+			w: 600,												//Width of the circle
+			h: 600,												//Height of the circle
+			margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
+			style: "radial",
+			angle: 90,	// Angle of Gauge
+			cutout: .25,	// Size of Gauge Cutout
+			color: '#DB4437',	// Color of Gauge fill
+			arm: 10,					// Arm extension
+			arm_weight: 8,		// Arm weight
+			gauge_background: '#CECECE',	// Gauge background color
+			spinner_background: '#282828',	// Spinner background color
+			spinner_weight: 6,	// Spinner Weight
+			range: [0,100],
+			value: 50,
+			target: 0,
+			target_background: '#282828',
+			target_width: 3,
+			labelPadding: 40,
+			targetPadding: 1.1,
+			type: 'vertical',
+			value_label: ''
+		};
+	  
+	  	let radius = 0.4*Math.min(element.clientWidth, element.clientHeight);
+	  	// let radius = .4*element.clientWidth;
+	  	let cutoutCalc = radius*cfg.cutout;
+		
+		//Put all of the options into a variable called cfg
+		if('undefined' !== typeof options){
+			for(var i in options){
+				if('undefined' !== typeof options[i]){ cfg[i] = options[i]; }
+		  	}
 		}
-	};
+	  
+	  	d3.select("#vis").selectAll("svg").remove();
+	  	var div = d3.select("#vis")
+		    .style("background-color", "#FFF")
+		  	.style("overflow-x", "hidden")
+		  	.style("overflow-y", "hidden")
+		  	.style("position", "fixed")
+		  	.attr("height", "100%");
+	  
+		var svg = d3.select("#vis").append("svg")
+			.attr("class", "viz_svg")
+	  		.attr("preserveAspectRatio", "xMidYMid meet")
+	  		.attr("viewBox", `${element.clientWidth/-2} ${element.clientHeight/-2} ${element.clientWidth} ${element.clientHeight*.9}`);
+	  
+		var g = svg.append("g");
+	  	
+	  	if (cfg.type == 'radial') {
+	  		var generator = d3.arc()
+		      	.innerRadius(cutoutCalc)
+		      	.outerRadius(radius)
+		      	.startAngle(-cfg.angle * Math.PI * 2 / 360)
+		      	.endAngle(cfg.angle * Math.PI * 2 / 360);
+		  	var cover = g.append('path')
+		  		.attr("class", "gauge_background")
+		  		.attr("d", generator)
+		  		.attr("fill", cfg.gauge_background)
+		  		.attr("stroke", "none");
+		  	var proportion = mapBetween(cfg.value,0,1,cfg.range[0],cfg.range[1])
+		  	var value_angle = cfg.angle*2*proportion - cfg.angle;
+		  	var fill_generator = d3.arc()
+		      	.innerRadius(cutoutCalc)
+		      	.outerRadius(radius)
+		      	.startAngle(-cfg.angle * Math.PI * 2 / 360)
+		      	.endAngle(value_angle * Math.PI * 2 / 360);
+		  	var gauge_fill = g.append('path')
+		  		.attr("class", "gaugeFill")
+		  		.attr("d", fill_generator)
+		  		.attr("fill", cfg.color)
+		  		.attr("stroke", "none");
+		  	var leftArmArc = d3.arc()
+			    .innerRadius(cutoutCalc)
+			    .outerRadius(radius+cfg.arm)
+			    .startAngle(-cfg.angle * Math.PI * 2 / 360)
+			    .endAngle(-cfg.angle * Math.PI * 2 / 360);
+		  	g.append('path')
+		  		.attr("class", "leftArmArc")
+		  		.attr("d", leftArmArc)
+		  		.attr("fill", cfg.gauge_background)
+		  		.attr("stroke", cfg.gauge_background)
+		  		.attr("stroke-width", cfg.arm_weight);
+		  	var rightArmArc = d3.arc()
+		        .innerRadius(cutoutCalc)
+		      	.outerRadius(radius+cfg.arm)
+		      	.startAngle(cfg.angle * Math.PI * 2 / 360)
+		      	.endAngle(cfg.angle * Math.PI * 2 / 360);
+		  	g.append('path')
+		  		.attr("class", "rightArmArc")
+		  		.attr("d", rightArmArc)
+		  		.attr("fill", cfg.gauge_background)
+		  		.attr("stroke", cfg.gauge_background)
+		  		.attr("stroke-width", cfg.arm_weight);
+		  	var spinnerArm = d3.arc()
+		      	.innerRadius(0)
+		      	.outerRadius(radius+cfg.arm)
+		      	.startAngle(value_angle * Math.PI * 2 / 360)
+		      	.endAngle(value_angle * Math.PI * 2 / 360);
+		  	g.append('path')
+		  		.attr("class", "spinnerArm")
+		  		.attr("d", spinnerArm)
+		  		.attr("fill", cfg.spinner_background)
+		  		.attr("stroke", cfg.spinner_background)
+		  		.attr("stroke-width", cfg.spinner_weight);
+		  	g.append("circle")
+			  	.attr("class", "spinnerCenter")
+			  	.attr("r", cfg.spinner_weight)
+			    .style("fill", "#282828");
+		  	var target_proportion = mapBetween(cfg.target,0,1,cfg.range[0],cfg.range[1])
+		  	var tarNeg = target_proportion < .5 ? -1 : 1;
+		  	var target_angle = cfg.angle*2*target_proportion - cfg.angle;
+		  	var targetSpinner = d3.arc()
+		      	.innerRadius(cutoutCalc)
+		      	.outerRadius(radius)
+		      	.startAngle(target_angle * Math.PI * 2 / 360)
+		     	.endAngle(target_angle * Math.PI * 2 / 360);
+		  	var targetLine = g.append('path')
+		  		.attr("class", "targetSpinner")
+		  		.attr("d", targetSpinner)
+		  		.attr("stroke", cfg.target_background)
+		  		.attr("stroke-width", cfg.target_width)
+		  		.attr("stroke-dasharray", radius/10);
+		  	var targetLabelArc = d3.arc()
+		      	.innerRadius(radius*cfg.targetPadding)
+		      	.outerRadius(radius*cfg.targetPadding)
+		      	.startAngle(target_angle * Math.PI * 2 / 360)
+		     	.endAngle(target_angle * Math.PI * 2 / 360);
+		  	var targetLabelLine = g.append('path')
+		  		.attr("class", "targetLabel")
+		  		.attr("d", targetLabelArc);
+		  	g.append('text')
+		  		.attr("class", "targetValue")
+		  		.text(`$${cfg.target}M last month`)
+		  		.style("font-size", "12px")
+		  		.style("font-family", "Open Sans")
+		  		.attr("x", ()=>{
+		  			if (tarNeg > 0) {
+		  				return d3.select(".targetLabel").node().getBBox().x;
+		  			} else {
+		  				return d3.select(".targetLabel").node().getBBox().x - d3.select(".targetValue").node().getBBox().width
+		  			}
+		  		})
+		  		.attr("y", () => {
+		  			return d3.select(".targetLabel").node().getBBox().y
+		  		});
+		  	g.append('text')
+		  		.attr("class", "gaugeValue")
+		  		.text(`$${cfg.value}M ACV`)
+		  		.style("font-size", "22px")
+		  		.style("font-family", "Open Sans")
+		  		.attr("transform", `translate(${0 - d3.select(".gaugeValue").node().getBBox().width/2} ${0 + cfg.labelPadding})`);
+		  	done()
+	  	} else if (cfg.type == 'vertical') {
+	  		var proportion = mapBetween(cfg.value,0,1,cfg.range[0],cfg.range[1])
+	  		g.append("rect")
+	  			.attr("class", "vertical-gauge")
+	  			.attr("width", 50)
+	  			.attr("height", "100%")
+	  			.style("fill", cfg.gauge_background)
+	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
+	  			.attr("y", element.clientHeight/-2);
+	  		g.append("rect")
+	  			.attr("class", "top-arm")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')*1.2)
+	  			.attr("height", "8%")
+	  			.attr("z-index", "5")
+	  			.style("fill", cfg.gauge_background)
+	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
+	  			.attr("y", element.clientHeight/-2);
+	  		g.append("rect")
+	  			.attr("class", "bottom-arm")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')*1.2)
+	  			.attr("height", "8%")
+	  			.attr("z-index", "5")
+	  			.style("fill", cfg.gauge_background)
+	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
+	  			.attr("y", d3.select(".vertical-gauge").node().getBBox().y + d3.select(".vertical-gauge").node().getBBox().height - d3.select(".bottom-arm").node().getBBox().height);
+	  		g.append("rect")
+	  			.attr("class", "vertical-fill")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width'))
+	  			.attr("height", `${proportion * (d3.select(".vertical-gauge").node().getBBox().height-d3.select(".top-arm").node().getBBox().height*2)}`)
+	  			.style("fill", cfg.color)
+	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
+	  			.attr("y", d3.select(".vertical-gauge").node().getBBox().y + d3.select(".vertical-gauge").node().getBBox().height - d3.select(".vertical-fill").node().getBBox().height - d3.select(".bottom-arm").node().getBBox().height);
+	  		g.append("rect")
+	  			.attr("class", "value-line")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')*1.2)
+	  			.attr("height", "4%")
+	  			.style("fill", cfg.spinner_background)
+	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')*0.7)
+	  			.attr("y", d3.select(".vertical-fill").attr('y'));
+	  		g.append("text")
+	  			.attr("class", "value-label")
+	  			.text(cfg.value)
+	  			.attr("dy", ".7em")
+	  			.attr("dx", "-.35em")
+	  			.style("font-family", "Open Sans")
+	  			.style("font-size", "30px")
+	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')/2-d3.select(".value-label").node().getBBox().width)
+	  			.attr("y", d3.select(".vertical-fill").attr('y'));
+	  		g.append("text")
+	  			.attr("class", "value-label-label")
+	  			.text(cfg.value_label)
+	  			.attr("dx", "-.35em")
+	  			.attr("dy", "1.9em")
+	  			.style("font-family", "Open Sans")
+	  			.style("font-size", "20px")
+	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')/2-d3.select(".value-label-label").node().getBBox().width)
+	  			.attr("y", d3.select(".vertical-fill").attr('y'));
+	  		var target_proportion = mapBetween(cfg.target,0,1,cfg.range[0],cfg.range[1])
+	  		g.append("rect")
+	  			.attr("class", "target-fill")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width'))
+	  			.attr("height", `${target_proportion * (d3.select(".vertical-gauge").node().getBBox().height-d3.select(".top-arm").node().getBBox().height*2)}`)
+	  			.style("fill", "none")
+	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
+	  			.attr("y", d3.select(".vertical-gauge").node().getBBox().y + d3.select(".vertical-gauge").node().getBBox().height - d3.select(".target-fill").node().getBBox().height - d3.select(".bottom-arm").node().getBBox().height);
+	  		g.append("line")
+	  			.attr("class", "target-line")
+	  			.attr("stroke-width", "4")
+	  			.style("stroke", cfg.target_background)
+	  			.attr("stroke-dasharray", "5")
+	  			.attr("x1", 0-d3.select(".vertical-gauge").attr('width')*0.5)
+	  			.attr("y1", d3.select(".target-fill").attr('y'))
+	  			.attr("x2", 0+d3.select(".vertical-gauge").attr('width')*0.7)
+	  			.attr("y2", d3.select(".target-fill").attr('y'));
+	  	} else if (cfg.type == 'horizontal') {
+
+	  	}
+	  	doneRendering()
+	}
+};
 
 looker.plugins.visualizations.add(visObject);
