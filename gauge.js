@@ -286,7 +286,7 @@ const visObject = {
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "20px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')/2+d3.select(".target-label").node().getBBox().width)
-	  			.attr("y", d3.select(".vertical-fill").attr('y'));
+	  			.attr("y", d3.select(".target-fill").attr('y'));
 	  		g.append("text")
 	  			.attr("class", "target-label-label")
 	  			.text(cfg.target_label)
@@ -295,7 +295,7 @@ const visObject = {
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "12px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')/2+d3.select(".target-label-label").node().getBBox().width)
-	  			.attr("y", d3.select(".vertical-fill").attr('y'));
+	  			.attr("y", d3.select(".target-fill").attr('y'));
 	  	} else if (cfg.type == 'horizontal') {
 
 	  	}
