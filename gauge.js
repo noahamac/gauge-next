@@ -29,23 +29,23 @@ const visObject = {
 
 	  	this.trigger('registerOptions', baseOptions);
 
-	 //  	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
-	 //  	labels = ["minutes", "mins", "orders", "ACV", "units"]
-	 //  	let color = colorArray[Math.floor(Math.random()*colorArray.length)]
-	 //  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
-		// let value = Math.ceil(Math.random()*100)
-		// let target = Math.floor(Math.random()*100)
-		// let angle = Math.ceil(Math.random()*100+30)
+	  	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
+	  	labels = ["minutes", "mins", "orders", "ACV", "units"]
+	  	let color = colorArray[Math.floor(Math.random()*colorArray.length)]
+	  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
+		let value = Math.ceil(Math.random()*100)
+		let target = Math.floor(Math.random()*100)
+		let angle = Math.ceil(Math.random()*100+30)
 
 		var options = {
 	  		w: width,
 	  		h: height,
 	  		margin: margin,
-	  		// color: color,
-	  		// value: value,
-	  		// target: target,
-	  		// angle: angle,
-	  		// value_label: valueLabel
+	  		color: color,
+	  		value: value,
+	  		target: target,
+	  		angle: angle,
+	  		value_label: valueLabel
 		};
 
 		var cfg = {
