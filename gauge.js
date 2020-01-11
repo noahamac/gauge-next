@@ -31,9 +31,11 @@ const visObject = {
 
 	  	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
 	  	labels = ["minutes", "mins", "orders", "ACV", "units"]
+	  	types = ["radial", "vertical"]
 	  	let color = colorArray[Math.round(Math.random()*colorArray.length)]
 	  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
 	  	let targetLabel = labels[Math.round(Math.random()*labels.length)]
+	  	let typeRand = types[Math.round(Math.random()*types.length)]
 		let value = Math.round(Math.random()*10000)
 		let target = Math.round(Math.random()*10000)
 		let angle = Math.round(Math.random()*100+30)
@@ -47,7 +49,8 @@ const visObject = {
 	  		target: target,
 	  		angle: angle,
 	  		value_label: valueLabel,
-	  		target_label: valueLabel
+	  		target_label: valueLabel,
+	  		type: typeRand
 		};
 
 		var cfg = {
