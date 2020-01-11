@@ -257,10 +257,11 @@ const visObject = {
 	  			.attr("class", "value-label-label")
 	  			.text(cfg.value_label)
 	  			.attr("dx", "-.35em")
+	  			.attr("dy", ".35em")
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "20px")
 	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')/2-d3.select(".value-label-label").node().getBBox().width)
-	  			.attr("y", d3.select(".value-label").node().getBBox().y + d3.select(".value-label").node().getBBox().height + 10);
+	  			.attr("y", d3.select(".value-label").node().getBBox().y + d3.select(".value-label").node().getBBox().height);
 	  		var target_proportion = mapBetween(cfg.target,0,1,cfg.range[0],cfg.range[1])
 	  		g.append("rect")
 	  			.attr("class", "target-fill")
@@ -289,10 +290,11 @@ const visObject = {
 	  		g.append("text")
 	  			.attr("class", "target-label-label")
 	  			.text(cfg.target_label)
+	  			.attr("dy", ".35em")
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "12px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')*3/4)
-	  			.attr("y", d3.select(".target-label").node().getBBox().y + d3.select(".target-label").node().getBBox().height + 10);
+	  			.attr("y", d3.select(".target-label").node().getBBox().y + d3.select(".target-label").node().getBBox().height);
 	  	} else if (cfg.type == 'horizontal') {
 
 	  	}
