@@ -34,8 +34,8 @@ const visObject = {
 	  	let color = colorArray[Math.round(Math.random()*colorArray.length)]
 	  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
 	  	let targetLabel = labels[Math.round(Math.random()*labels.length)]
-		let value = Math.round(Math.random()*100)
-		let target = Math.round(Math.random()*100)
+		let value = Math.round(Math.random()*10000)
+		let target = Math.round(Math.random()*10000)
 		let angle = Math.round(Math.random()*100+30)
 
 		var options = {
@@ -63,7 +63,7 @@ const visObject = {
 			gauge_background: '#CECECE',	// Gauge background color
 			spinner_background: '#282828',	// Spinner background color
 			spinner_weight: 6,	// Spinner Weight
-			range: [0,100],
+			range: [0,10000],
 			value: 50,
 			target: 0,
 			target_background: '#282828',
