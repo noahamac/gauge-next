@@ -244,9 +244,9 @@ const visObject = {
 	  			.style("fill", cfg.spinner_background)
 	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')*0.7)
 	  			.attr("y", d3.select(".vertical-fill").attr('y'));
-	  		g.append("text")
+	  		g.append("div")
 	  			.attr("class", "value-label")
-	  			.text(cfg.value)
+	  			.html(LookerCharts.Utils.htmlForCell({value: cfg.value}))
 	  			.attr("dy", ".7em")
 	  			.attr("dx", "-.35em")
 	  			.style("font-family", "Open Sans")
@@ -279,9 +279,9 @@ const visObject = {
 	  			.attr("y1", d3.select(".target-fill").attr('y'))
 	  			.attr("x2", 0+d3.select(".vertical-gauge").attr('width')*0.7)
 	  			.attr("y2", d3.select(".target-fill").attr('y'));
-	  		g.append("text")
+	  		g.append("div")
 	  			.attr("class", "target-label")
-	  			.text(cfg.target)
+	  			.html(LookerCharts.Utils.htmlForCell({value: cfg.target}))
 	  			.attr("dy", ".7em")
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "20px")
