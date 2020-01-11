@@ -290,7 +290,7 @@ const visObject = {
 	  		g.append("text")
 	  			.attr("class", "target-label-label")
 	  			.text(cfg.target_label)
-	  			.attr("dy", "1.9em")
+	  			.attr("dy", "2em")
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "12px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')*3/4)
