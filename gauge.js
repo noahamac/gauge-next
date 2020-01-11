@@ -260,7 +260,7 @@ const visObject = {
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "20px")
 	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')/2-d3.select(".value-label-label").node().getBBox().width)
-	  			.attr("y", d3.select(".vertical-fill").attr('y') + d3.select(".value-label").node().getBBox().height);
+	  			.attr("y", d3.select(".value-label").node().getBBox().y + d3.select(".value-label").node().getBBox().height);
 	  		var target_proportion = mapBetween(cfg.target,0,1,cfg.range[0],cfg.range[1])
 	  		g.append("rect")
 	  			.attr("class", "target-fill")
@@ -292,7 +292,7 @@ const visObject = {
 	  			.style("font-family", "Open Sans")
 	  			.style("font-size", "12px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')*3/4)
-	  			.attr("y", d3.select(".target-fill").attr('y') + d3.select(".target-label").node().getBBox().height);
+	  			.attr("y", d3.select(".target-label").node().getBBox().y + d3.select(".target-label").node().getBBox().height);
 	  	} else if (cfg.type == 'horizontal') {
 
 	  	}
