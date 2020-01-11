@@ -47,7 +47,7 @@ const visObject = {
 	  		target: target,
 	  		angle: angle,
 	  		value_label: valueLabel,
-	  		target_label: targetLabel
+	  		target_label: valueLabel
 		};
 
 		var cfg = {
