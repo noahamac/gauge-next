@@ -273,6 +273,7 @@ const visObject = {
 	  		g.append("line")
 	  			.attr("class", "target-line")
 	  			.attr("stroke-width", "4")
+	  			.attr("fill", "none")
 	  			.style("stroke", cfg.target_background)
 	  			.attr("stroke-dasharray", "5")
 	  			.attr("x1", 0-d3.select(".vertical-gauge").attr('width')*0.5)
