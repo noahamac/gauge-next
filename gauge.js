@@ -16,7 +16,7 @@ const baseOptions = {
     },
     arm_length: {
       	type: "number",
-      	label: "Gauge Angle",
+      	label: "Arm Length",
       	default: 10,
       	section: "Plot",
       	display: "range",
@@ -25,7 +25,7 @@ const baseOptions = {
     },
     arm_weight: {
       	type: "number",
-      	label: "Gauge Angle",
+      	label: "Arm Thickness",
       	default: 8,
       	section: "Plot",
       	display: "range",
