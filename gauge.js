@@ -219,7 +219,7 @@ const visObject = {
 	  			.attr("y", element.clientHeight/-2);
 	  		g.append("rect")
 	  			.attr("class", "top-arm")
-	  			.attr("width", d3.select(".vertical-gauge").attr('width')+cfg.arm)
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')*(cfg.arm/100+1))
 	  			.attr("height", `${cfg.arm_weight}%`)
 	  			.attr("z-index", "5")
 	  			.style("fill", cfg.gauge_background)
@@ -227,7 +227,7 @@ const visObject = {
 	  			.attr("y", element.clientHeight/-2);
 	  		g.append("rect")
 	  			.attr("class", "bottom-arm")
-	  			.attr("width", d3.select(".vertical-gauge").attr('width')+cfg.arm)
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')*(cfg.arm/100+1))
 	  			.attr("height", `${cfg.arm_weight}%`)
 	  			.attr("z-index", "5")
 	  			.style("fill", cfg.gauge_background)
