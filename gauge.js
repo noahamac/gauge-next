@@ -76,6 +76,15 @@ const baseOptions = {
       	min: 0,
       	max: 100
     },
+    label_padding: {
+      	type: "number",
+      	label: "Label Padding",
+      	default: 40,
+      	section: "Plot",
+      	display: "range",
+      	min: 0,
+      	max: 100
+    },
     fill_color: {
         type: `string`,
         label: `Fill Color`,
@@ -166,10 +175,6 @@ const visObject = {
 			value_label: '',
 			target_label: ''
 		};
-	  
-	  	let radius = 0.4*Math.min(element.clientWidth, element.clientHeight);
-	  	// let radius = .4*element.clientWidth;
-	  	let cutoutCalc = radius*cfg.cutout;
 		
 		//Put all of the options into a variable called cfg
 		if('undefined' !== typeof options){
@@ -177,6 +182,10 @@ const visObject = {
 				if('undefined' !== typeof options[i]){ cfg[i] = options[i]; }
 		  	}
 		}
+
+		let radius = 0.4*Math.min(element.clientWidth, element.clientHeight);
+	  	// let radius = .4*element.clientWidth;
+	  	let cutoutCalc = radius*cfg.cutout;
 	  
 	  	d3.select("#vis").selectAll("svg").remove();
 	  	var div = d3.select("#vis")
