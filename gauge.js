@@ -4,6 +4,32 @@ function mapBetween(currentNum, minAllowed, maxAllowed, min, max) {
   	return (maxAllowed - minAllowed) * (currentNum - min) / (max - min) + minAllowed;
 }
 
+function wrap(text, width) {
+  text.each(function() {
+	var text = d3.select(this),
+		words = text.text().split(/\s+/).reverse(),
+		word,
+		line = [],
+		lineNumber = 0,
+		lineHeight = 1.4, // ems
+		y = text.attr("y"),
+		x = text.attr("x"),
+		dy = parseFloat(text.attr("dy")),
+		tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+		
+	while (word = words.pop()) {
+	  line.push(word);
+	  tspan.text(line.join(" "));
+	  if (tspan.node().getComputedTextLength() > width) {
+		line.pop();
+		tspan.text(line.join(" "));
+		line = [word];
+		tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+	  }
+	}
+  });
+}//wrap	
+
 const baseOptions = {
 	angle: {
       	type: "number",
@@ -85,6 +111,15 @@ const baseOptions = {
       	min: 0,
       	max: 100
     },
+    wrap_width: {
+      	type: "number",
+      	label: "Label Wrap Factor",
+      	default: 30,
+      	section: "Plot",
+      	display: "range",
+      	min: 0,
+      	max: 100
+    },
     fill_color: {
         type: `string`,
         label: `Fill Color`,
@@ -148,7 +183,8 @@ const visObject = {
 	  		cutout: config.cutout/100,
 	  		spinner_background: config.spinner_color,
 	  		spinner_weight: config.spinner_weight,
-	  		labelPadding: config.label_padding,
+	  		label_padding: config.label_padding,
+	  		wrap_width: config.wrap_width
 
 
 		};
@@ -175,7 +211,8 @@ const visObject = {
 			targetPadding: 1.1,
 			type: 'vertical',
 			value_label: '',
-			target_label: ''
+			target_label: '',
+			wrap_width: 30
 		};
 		
 		//Put all of the options into a variable called cfg
@@ -300,7 +337,8 @@ const visObject = {
 		  		})
 		  		.attr("y", () => {
 		  			return d3.select(".targetLabel").node().getBBox().y
-		  		});
+		  		})
+		  		.call(wrap, cfg.wrap_width);;
 		  	g.append('text')
 		  		.attr("class", "gaugeValue")
 		  		.text(`$${cfg.value}M ACV`)
@@ -338,13 +376,13 @@ const visObject = {
 	  			.attr("width", d3.select(".vertical-gauge").attr('width'))
 	  			.attr("height", `${proportion * (d3.select(".vertical-gauge").node().getBBox().height-d3.select(".top-arm").node().getBBox().height*2)}`)
 	  			.style("fill", cfg.color)
-	  			.attr("stroke-width", "0")
 	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
 	  			.attr("y", d3.select(".vertical-gauge").node().getBBox().y + d3.select(".vertical-gauge").node().getBBox().height - d3.select(".vertical-fill").node().getBBox().height - d3.select(".bottom-arm").node().getBBox().height);
 	  		g.append("rect")
 	  			.attr("class", "value-line")
+	  			.attr("stroke", cfg.spinner_background)
 	  			.attr("width", d3.select(".vertical-gauge").attr('width')*1.2)
-	  			.attr("height", "4%")
+	  			.attr("height", `${cfg.spinner_weight}%`)
 	  			.style("fill", cfg.spinner_background)
 	  			.attr("x", 0-d3.select(".vertical-gauge").attr('width')*0.7)
 	  			.attr("y", d3.select(".vertical-fill").attr('y'));
