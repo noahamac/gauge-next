@@ -149,7 +149,7 @@ const visObject = {
 	  		spinner_background: config.spinner_color,
 	  		spinner_weight: config.spinner_weight,
 	  		labelPadding: config.label_padding,
-	  		
+
 
 		};
 
@@ -338,7 +338,7 @@ const visObject = {
 	  			.attr("width", d3.select(".vertical-gauge").attr('width'))
 	  			.attr("height", `${proportion * (d3.select(".vertical-gauge").node().getBBox().height-d3.select(".top-arm").node().getBBox().height*2)}`)
 	  			.style("fill", cfg.color)
-	  			.attr("stroke", "none")
+	  			.attr("stroke-width", "0")
 	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
 	  			.attr("y", d3.select(".vertical-gauge").node().getBBox().y + d3.select(".vertical-gauge").node().getBBox().height - d3.select(".vertical-fill").node().getBBox().height - d3.select(".bottom-arm").node().getBBox().height);
 	  		g.append("rect")
