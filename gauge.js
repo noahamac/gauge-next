@@ -5,10 +5,49 @@ function mapBetween(currentNum, minAllowed, maxAllowed, min, max) {
 }
 
 const baseOptions = {
-	myOption: {
+	angle: {
       	type: "number",
-      	label: "Option label",
-      	default: 4,
+      	label: "Gauge Angle",
+      	default: 90,
+      	section: "Plot",
+      	display: "range",
+      	min: 10,
+      	max: 170
+    },
+    style: {
+      type: "string",
+      label: "Gauge Style",
+      display: "select",
+      section: "Plot",
+      values: [
+      	 {"Radial": "radial"},
+      	 {"Vertical": "vertical"},
+      	 {"Horizontal": "horizontal"}
+      ],
+      default: "radial"
+    },
+    gauge_color: {
+        type: `string`,
+        label: `Background Color`,
+        display: `color`,
+        section: "Plot",
+        default: "#CDCDCD"
+    },
+    fill_color: {
+        type: `string`,
+        label: `Fill Color`,
+        display: `color`,
+        section: "Plot",
+        default: "#0275d8"
+    },
+    value_label: {
+     	type: "string",
+      	label: "Value Label",
+      	section: "Plot"
+    },
+    target_label: {
+     	type: "string",
+      	label: "Value Label",
       	section: "Plot"
     },
 }
@@ -32,25 +71,26 @@ const visObject = {
 	  	colorArray = ["#0275d8","#5cb85c","#5bc0de","#f0ad4e","#d9534f"]
 	  	labels = ["minutes", "mins", "orders", "ACV", "units"]
 	  	types = ["radial", "vertical"]
-	  	let color = colorArray[Math.round(Math.random()*colorArray.length)]
-	  	let valueLabel = labels[Math.round(Math.random()*labels.length)]
-	  	let targetLabel = labels[Math.round(Math.random()*labels.length)]
-	  	let typeRand = types[Math.round(Math.random()*types.length)]
+	  	// let color = colorArray[Math.round(Math.random()*colorArray.length)]
+	  	// let valueLabel = labels[Math.round(Math.random()*labels.length)]
+	  	// let targetLabel = labels[Math.round(Math.random()*labels.length)]
+	  	// let typeRand = types[Math.round(Math.random()*types.length)]
 		let value = Math.round(Math.random()*10000)
 		let target = Math.round(Math.random()*10000)
-		let angle = Math.round(Math.random()*100+30)
+		// let angle = Math.round(Math.random()*100+30)
 
 		var options = {
 	  		w: width,
 	  		h: height,
 	  		margin: margin,
-	  		color: color,
+	  		color: config.fill_color,
 	  		value: value,
 	  		target: target,
-	  		angle: angle,
-	  		value_label: valueLabel,
-	  		target_label: valueLabel,
-	  		type: typeRand
+	  		angle: config.angle,
+	  		value_label: config.value_label,
+	  		target_label: config.target_label,
+	  		type: config.style,
+	  		gauge_background: config.gauge_color
 		};
 
 		var cfg = {
