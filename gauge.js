@@ -32,6 +32,15 @@ const baseOptions = {
       	min: 0,
       	max: 100
     },
+    cutout: {
+      	type: "number",
+      	label: "Gauge Cutout",
+      	default: 15,
+      	section: "Plot",
+      	display: "range",
+      	min: 0,
+      	max: 100
+    },
     style: {
       type: "string",
       label: "Gauge Style",
@@ -50,6 +59,22 @@ const baseOptions = {
         display: `color`,
         section: "Plot",
         default: "#CDCDCD"
+    },
+    spinner_color: {
+        type: `string`,
+        label: `Spinner Color`,
+        display: `color`,
+        section: "Plot",
+        default: "#282828"
+    },
+    spinner_weight: {
+      	type: "number",
+      	label: "Spinner Thickness",
+      	default: 8,
+      	section: "Plot",
+      	display: "range",
+      	min: 0,
+      	max: 100
     },
     fill_color: {
         type: `string`,
@@ -110,7 +135,11 @@ const visObject = {
 	  		type: config.style,
 	  		gauge_background: config.gauge_color,
 	  		arm: config.arm_length,
-	  		arm_weight: config.arm_weight
+	  		arm_weight: config.arm_weight,
+	  		cutout: config.cutout/100,
+	  		spinner_background: config.spinner_color,
+	  		spinner_weight: config.spinner_weight,
+
 		};
 
 		var cfg = {
