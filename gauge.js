@@ -207,8 +207,8 @@ const visObject = {
 			target: 0,
 			target_background: '#282828',
 			target_width: 3,
-			labelPadding: 40,
-			targetPadding: 1.1,
+			label_padding: 40,
+			target_padding: 1.1,
 			type: 'vertical',
 			value_label: '',
 			target_label: '',
@@ -316,8 +316,8 @@ const visObject = {
 		  		.attr("stroke-width", cfg.target_width)
 		  		.attr("stroke-dasharray", radius/10);
 		  	var targetLabelArc = d3.arc()
-		      	.innerRadius(radius*cfg.targetPadding)
-		      	.outerRadius(radius*cfg.targetPadding)
+		      	.innerRadius(radius*cfg.target_padding)
+		      	.outerRadius(radius*cfg.target_padding)
 		      	.startAngle(target_angle * Math.PI * 2 / 360)
 		     	.endAngle(target_angle * Math.PI * 2 / 360);
 		  	var targetLabelLine = g.append('path')
@@ -345,7 +345,7 @@ const visObject = {
 		  		.text(`$${cfg.value}M ACV`)
 		  		.style("font-size", "22px")
 		  		.style("font-family", "Open Sans")
-		  		.attr("transform", `translate(${0 - d3.select(".gaugeValue").node().getBBox().width/2} ${0 + cfg.labelPadding})`);
+		  		.attr("transform", `translate(${0 - d3.select(".gaugeValue").node().getBBox().width/2} ${0 + cfg.label_padding})`);
 		  	doneRendering()
 	  	} else if (cfg.type == 'vertical') {
 	  		var proportion = mapBetween(cfg.value,0,1,cfg.range[0],cfg.range[1])
