@@ -148,6 +148,8 @@ const visObject = {
 	  		cutout: config.cutout/100,
 	  		spinner_background: config.spinner_color,
 	  		spinner_weight: config.spinner_weight,
+	  		labelPadding: config.label_padding,
+	  		
 
 		};
 
@@ -305,7 +307,7 @@ const visObject = {
 		  		.style("font-size", "22px")
 		  		.style("font-family", "Open Sans")
 		  		.attr("transform", `translate(${0 - d3.select(".gaugeValue").node().getBBox().width/2} ${0 + cfg.labelPadding})`);
-		  	done()
+		  	doneRendering()
 	  	} else if (cfg.type == 'vertical') {
 	  		var proportion = mapBetween(cfg.value,0,1,cfg.range[0],cfg.range[1])
 	  		g.append("rect")
@@ -398,6 +400,7 @@ const visObject = {
 	  			.style("font-size", "12px")
 	  			.attr("x", 0+d3.select(".vertical-gauge").attr('width')*3/4)
 	  			.attr("y", d3.select(".target-label").node().getBBox().y + d3.select(".target-label").node().getBBox().height);
+	  		doneRendering()
 	  	} else if (cfg.type == 'horizontal') {
 
 	  	}
