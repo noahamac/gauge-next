@@ -5,7 +5,7 @@ function mapBetween(currentNum, minAllowed, maxAllowed, min, max) {
 }
 
 const baseOptions = {
-		myOption: {
+	myOption: {
       	type: "number",
       	label: "Option label",
       	default: 4,
@@ -61,7 +61,7 @@ const visObject = {
 			angle: 90,	// Angle of Gauge
 			cutout: .25,	// Size of Gauge Cutout
 			color: '#DB4437',	// Color of Gauge fill
-			arm: 10,					// Arm extension
+			arm: 20,					// Arm extension
 			arm_weight: 8,		// Arm weight
 			gauge_background: '#CECECE',	// Gauge background color
 			spinner_background: '#282828',	// Spinner background color
@@ -219,16 +219,16 @@ const visObject = {
 	  			.attr("y", element.clientHeight/-2);
 	  		g.append("rect")
 	  			.attr("class", "top-arm")
-	  			.attr("width", d3.select(".vertical-gauge").attr('width')*1.2)
-	  			.attr("height", "8%")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')+cfg.arm)
+	  			.attr("height", `${cfg.arm_weight}%`)
 	  			.attr("z-index", "5")
 	  			.style("fill", cfg.gauge_background)
 	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
 	  			.attr("y", element.clientHeight/-2);
 	  		g.append("rect")
 	  			.attr("class", "bottom-arm")
-	  			.attr("width", d3.select(".vertical-gauge").attr('width')*1.2)
-	  			.attr("height", "8%")
+	  			.attr("width", d3.select(".vertical-gauge").attr('width')+cfg.arm)
+	  			.attr("height", `${cfg.arm_weight}%`)
 	  			.attr("z-index", "5")
 	  			.style("fill", cfg.gauge_background)
 	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
