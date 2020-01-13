@@ -118,7 +118,7 @@ const baseOptions = {
       	section: "Plot",
       	display: "range",
       	min: 0,
-      	max: 100
+      	max: 200
     },
     fill_color: {
         type: `string`,
