@@ -328,6 +328,7 @@ const visObject = {
 		  		.text(`$${cfg.target}M last month`)
 		  		.style("font-size", "12px")
 		  		.style("font-family", "Open Sans")
+		  		.attr("dy", '.35em')
 		  		.attr("x", ()=>{
 		  			if (tarNeg > 0) {
 		  				return d3.select(".targetLabel").node().getBBox().x;
