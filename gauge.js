@@ -14,6 +14,24 @@ const baseOptions = {
       	min: 10,
       	max: 170
     },
+    arm_length: {
+      	type: "number",
+      	label: "Gauge Angle",
+      	default: 10,
+      	section: "Plot",
+      	display: "range",
+      	min: 0,
+      	max: 100
+    },
+    arm_weight: {
+      	type: "number",
+      	label: "Gauge Angle",
+      	default: 8,
+      	section: "Plot",
+      	display: "range",
+      	min: 0,
+      	max: 100
+    },
     style: {
       type: "string",
       label: "Gauge Style",
@@ -90,7 +108,9 @@ const visObject = {
 	  		value_label: config.value_label,
 	  		target_label: config.target_label,
 	  		type: config.style,
-	  		gauge_background: config.gauge_color
+	  		gauge_background: config.gauge_color,
+	  		arm: config.arm_length,
+	  		arm_weight: config.arm_weight
 		};
 
 		var cfg = {
@@ -278,6 +298,7 @@ const visObject = {
 	  			.attr("width", d3.select(".vertical-gauge").attr('width'))
 	  			.attr("height", `${proportion * (d3.select(".vertical-gauge").node().getBBox().height-d3.select(".top-arm").node().getBBox().height*2)}`)
 	  			.style("fill", cfg.color)
+	  			.attr("stroke", "none")
 	  			.attr("x", 0-d3.select(".vertical-gauge").node().getBBox().width/2)
 	  			.attr("y", d3.select(".vertical-gauge").node().getBBox().y + d3.select(".vertical-gauge").node().getBBox().height - d3.select(".vertical-fill").node().getBBox().height - d3.select(".bottom-arm").node().getBBox().height);
 	  		g.append("rect")
