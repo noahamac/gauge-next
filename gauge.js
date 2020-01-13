@@ -61,7 +61,7 @@ const visObject = {
 			angle: 90,	// Angle of Gauge
 			cutout: .25,	// Size of Gauge Cutout
 			color: '#DB4437',	// Color of Gauge fill
-			arm: 10,					// Arm extension
+			arm: 0,					// Arm extension
 			arm_weight: 8,		// Arm weight
 			gauge_background: '#CECECE',	// Gauge background color
 			spinner_background: '#282828',	// Spinner background color
